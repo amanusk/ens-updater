@@ -23,7 +23,7 @@ contract('gas option', function(accounts) {
     })
 
     it('Should use default gas when no option set', async function() {
-        let expectedGas = web3.utils.toBN('70000')
+        let expectedGas = web3.utils.toBN('55000')
         const targetAddress = accounts[3]
         // set address
         const setAddressCmd = `${scriptpath} setAddress ${ensName} ${targetAddress} --web3 ${providerstring} --registryAddress ${registryAddress}`
@@ -34,8 +34,8 @@ contract('gas option', function(accounts) {
         assert.match(txHash, /^0x/)
         const transaction = await web3.eth.getTransaction(txHash)
         const actualGas = web3.utils.toBN(transaction.gas)
-        // Allow threshhold for slightly changing gas costs
-        const threshold = web3.utils.toBN('1000')
+        // Allow threshhold for varying gas costs
+        const threshold = web3.utils.toBN('10000')
         assert.isOk(
             (actualGas.gte(expectedGas.sub(threshold)) && actualGas.lte(expectedGas.add(threshold))),
             `Actual ${actualGas.toString()} - expected ${expectedGas.toString()}`

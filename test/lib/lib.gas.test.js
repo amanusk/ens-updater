@@ -33,7 +33,7 @@ contract('lib - gas', function(accounts) {
     })
 
     it ('should use automatic gas amount calculation when not specified', async function() {
-        let expectedGas = web3.utils.toBN('70000')
+        let expectedGas = web3.utils.toBN('55000')
         updater = new Updater()
         await updater.setup(updaterOptions)
         let newaddress = accounts[4]
@@ -44,7 +44,7 @@ contract('lib - gas', function(accounts) {
         const txReceipt = await web3.eth.getTransaction(txHash)
         const actualGas = web3.utils.toBN(txReceipt.gas)
         // Allow threshhold for slightly changing gas costs
-        let threshold = web3.utils.toBN('1000')
+        let threshold = web3.utils.toBN('10000')
         assert.isOk(
             (actualGas.gte(expectedGas.sub(threshold)) && actualGas.lte(expectedGas.add(threshold))),
             `Actual ${actualGas.toString()} - expected ${expectedGas.toString()}`
